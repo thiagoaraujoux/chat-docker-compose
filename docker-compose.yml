@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  chat-app:
+    build: ./server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/chat-db
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  front-end:
+    build: ./client
+    ports:
+      - "8080:80"
+    depends_on:
+      - chat-app
+
+volumes:
+  mongo-data:

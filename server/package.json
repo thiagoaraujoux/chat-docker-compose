@@ -1,0 +1,14 @@
+{
+  "name": "chat-app-server",
+  "version": "1.0.0",
+  "description": "Server for chat application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.8",
+    "socket.io": "^4.0.0"
+  }
+}
