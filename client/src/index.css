@@ -1,16 +1,81 @@
-/* Estilos básicos para a aplicação */
 body {
   font-family: Arial, sans-serif;
+  background-color: #f0f0f0; /* Cor de fundo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
 }
 
-div {
-  margin: 10px;
+.container {
+  background-color: #ffffff; /* Cor de fundo do container */
+  border-radius: 20px;
+  box-shadow: 8px 8px 16px #d1d1d1, 
+             -8px -8px 16px #ffffff; /* Efeito neomorfismo */
+  padding: 20px;
+  width: 400px;
 }
 
-input, button {
+h1 {
+  text-align: center;
+}
+
+input[type="text"], button {
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+input[type="text"] {
+  width: calc(100% - 40px);
+}
+
+button {
+  background-color: #4CAF50; /* Cor do botão */
+  color: white;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #45a049; /* Cor do botão ao passar o mouse */
+}
+
+.rooms-container {
+  margin-top: 20px;
+}
+
+.room-button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background-color: #3498db; /* Cor do botão da sala */
+  color: white;
   padding: 10px;
-  margin: 5px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.room-button:hover {
+  background-color: #2980b9; /* Cor do botão da sala ao passar o mouse */
+}
+
+.room-messages {
+  margin-top: 20px;
+}
+
+.message-container {
+  margin-bottom: 10px;
+}
+
+/* Estilo para as mensagens */
+.message-container strong {
+  color: #333333; /* Cor do nome */
+}
+
+.message-container span {
+  color: #666666; /* Cor da mensagem */
 }
