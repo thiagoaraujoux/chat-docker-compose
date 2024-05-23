@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
+import './App.css'; // Import the CSS file
 
 const socket = io('http://localhost:3000');
 
@@ -65,51 +66,49 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Chat App</h1>
-      <div>
+    <div className="wrapper">
+      <div className="container">
+        <h1>Salas de Chat</h1>
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <input
           type="text"
-          placeholder="Room"
+          placeholder="Nova sala"
           value={room}
           onChange={(e) => setRoom(e.target.value)}
         />
-        <button onClick={createRoom}>Create Room</button>
+        <button onClick={createRoom}>Criar</button>
+        <div className="rooms-container">
+          {rooms.map((r, index) => (
+            <button className="room-button" key={index} onClick={() => joinRoom(r.name)}>
+              {r.name}
+            </button>
+          ))}
+        </div>
       </div>
-      <div>
-        <h2>Rooms</h2>
-        {rooms.map((r, index) => (
-          <div key={index}>
-            <button onClick={() => joinRoom(r.name)}>{r.name}</button>
-          </div>
-        ))}
-      </div>
+
       {selectedRoom && (
-        <div>
-          <h2>Room: {selectedRoom}</h2>
-          <div>
-            <input
-              type="text"
-              placeholder="Message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button onClick={sendMessage}>Send</button>
-          </div>
-          <div>
+        <div className="chat-container">
+          <div className="chat-header">Chat da Sala: {selectedRoom}</div>
+          <div className="chat-messages">
             {messages.map((msg, index) => (
-              <div key={index}>
+              <div className="message-container" key={index}>
                 <strong>{msg.name}: </strong>
                 <span>{msg.message}</span>
               </div>
             ))}
           </div>
+          <input
+            type="text"
+            placeholder="Digite sua mensagem"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <button onClick={sendMessage}>Enviar</button>
         </div>
       )}
     </div>
