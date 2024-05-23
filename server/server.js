@@ -6,11 +6,7 @@ const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: "*",
-  }
-});
+const io = socketIo(server); // Removido o objeto de configuração do CORS
 
 app.use(cors());
 app.use(express.json());
@@ -67,27 +63,32 @@ app.post('/api/rooms', async (req, res) => {
 io.on('connection', (socket) => {
   console.log('New user connected');
 
-  socket.on('joinRoom', ({ name, room }) => {
+  socket.on('joinRoom', async ({ name, room }) => {
     socket.join(room);
     socket.room = room;
     socket.username = name;
 
-    Message.find({ room }).sort({ timestamp: 1 }).exec((err, messages) => {
-      if (err) return console.error(err);
+    try {
+      const messages = await Message.find({ room }).sort({ timestamp: 1 });
       socket.emit('roomMessages', messages);
-    });
+    } catch (err) {
+      console.error('Error fetching messages:', err);
+    }
   });
 
-  socket.on('chatMessage', (msg) => {
+  socket.on('chatMessage', async (msg) => {
     const newMessage = new Message({
       room: socket.room,
       name: socket.username,
       message: msg
     });
-    newMessage.save((err) => {
-      if (err) return console.error(err);
+
+    try {
+      await newMessage.save();
       io.to(socket.room).emit('chatMessage', newMessage);
-    });
+    } catch (err) {
+      console.error('Error saving message:', err);
+    }
   });
 
   socket.on('disconnect', () => {
