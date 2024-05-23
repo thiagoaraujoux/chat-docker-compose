@@ -14,7 +14,7 @@ services:
       - MONGO_URI=mongodb://mongo:27017/chat-db
 
   mongo:
-    image: mongo:4.4
+    image: mongo
     ports:
       - "27017:27017"
     volumes:
